@@ -11,7 +11,7 @@ A mask-driven cutout widget — punch through content to reveal what's beneath.
 [![GitHub stars](https://img.shields.io/github/stars/runoob-coder/flutter_cutout_widget.svg?style=social)](https://github.com/runoob-coder/flutter_cutout_widget)
 
 <div align="center">
- <img width="400" alt="Cutout" src="https://raw.githubusercontent.com/runoob-coder/flutter_cutout_widget/screenshots/screenshot.png">
+ <img width="400" alt="Cutout" src="https://raw.githubusercontent.com/runoob-coder/flutter_cutout_widget/master/screenshots/screenshot.png">
 </div>
 
 ## ✨ Features / 特性
