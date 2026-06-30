@@ -1,3 +1,11 @@
+## 1.0.1
+
+* Added CI/CD workflow — auto-build & deploy Flutter web demo to GitHub Pages.
+* Added live demo link on pub.dev & README.
+* Added comprehensive bilingual README (EN/CN) with badges, API reference, support section.
+* Lowered environment constraints to `sdk: ^3.10.0` / `flutter: ">=3.38.0"` for broader compatibility.
+* Added Ko-fi support link.
+
 ## 1.0.0
 
 * `Cutout` widget — punch a mask shape through content via `BlendMode.dstOut`.
