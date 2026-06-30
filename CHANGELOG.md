@@ -1,3 +1,7 @@
+## 1.0.2
+
+* Fixed `include` list in pubspec.yaml — added `analysis_options.yaml`, `test/`, and full `example/` directory so dartdoc generates API reference on pub.dev.
+
 ## 1.0.1
 
 * Added CI/CD workflow — auto-build & deploy Flutter web demo to GitHub Pages.

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-/// A [RenderStack] subclass that punches the first child ([maskChild]) through
+/// A [RenderStack] subclass that punches the first child (`maskChild`) through
 /// the remaining children, producing a cutout effect.
 ///
 /// Drawing follows a [BlendMode.dstOut] technique:
