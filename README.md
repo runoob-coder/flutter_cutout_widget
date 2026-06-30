@@ -4,8 +4,11 @@ A mask-driven cutout widget — punch through content to reveal what's beneath.
 
 蒙版镂空组件，将指定形状从内容中挖除，透出底层背景。
 
-[![Pub Version](https://img.shields.io/pub/v/tdesign_icons.svg)](https://pub.dev/packages/cutout)
+[![Pub Version](https://img.shields.io/pub/v/cutout.svg)](https://pub.dev/packages/cutout)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Flutter Demo](https://img.shields.io/badge/demo-Flutter-brightgreen.svg)](https://runoob-coder.github.io/flutter_cutout_widget/)
+[![API Reference](https://img.shields.io/badge/API-Reference-0175C2.svg)](https://pub.dev/documentation/cutout/latest/)
+[![GitHub stars](https://img.shields.io/github/stars/runoob-coder/flutter_cutout_widget.svg?style=social)](https://github.com/runoob-coder/flutter_cutout_widget)
 
 ## ✨ Features / 特性
 
@@ -37,6 +40,8 @@ import 'package:cutout/cutout.dart';
 ```
 
 ## [📖 Usage / 使用示例](https://github.com/runoob-coder/flutter_cutout_widget/example/lib/main.dart)
+
+https://runoob-coder.github.io/flutter_cutout_widget/
 
 ### Basic cutout with an icon / 使用图标镂空
 
@@ -147,6 +152,7 @@ Cutout(
 
 ## ⚠️ Important / 重要提示
 
+> [!IMPORTANT]
 > Content children that push their own composited layers — such as `AnimatedSwitcher`, `Opacity`, `FadeTransition`, `ClipRect`, `Transform`, `BackdropFilter`, etc. — will have those layers composite **outside** the internal `saveLayer` buffer, defeating the mask effect.
 >
 > **Avoid nesting layer-pushing widgets inside `Cutout.child` !**
@@ -161,6 +167,7 @@ breaking the `dstOut` cutout.
 
 ---
 
+> [!IMPORTANT]
 > 如果 `Cutout.child` 中包含会推送自身合成层的组件（如 `AnimatedSwitcher`、`Opacity`、`FadeTransition`、`ClipRect`、`Transform`、`BackdropFilter` 等），这些层会在内部 `saveLayer` 缓冲区**外部**合成，导致镂空失效。
 >
 > **避免在 `Cutout.child` 中嵌套会推送层的组件！**
@@ -172,7 +179,7 @@ breaking the `dstOut` cutout.
 可能通过 `pushOpacity` 等调用向 `layer tree` 推入独立的合成层（如 `OpacityLayer`）。
 这些合成层是当前 `ContainerLayer` 的兄弟节点，会逃逸出 `saveLayer` 缓冲区，导致`dstOut`镂空失效。
 
-## 📋 API
+## [📋 API](https://pub.dev/documentation/cutout)
 
 | Parameter | Type | Default | Description / 说明 |
 |---|---|---|---|
@@ -188,6 +195,16 @@ breaking the `dstOut` cutout.
 - **Homepage:** [GitHub](https://github.com/runoob-coder/flutter_cutout_widget)
 - **Issue Tracker:** [GitHub Issues](https://github.com/runoob-coder/flutter_cutout_widget/issues)
 
-## ☕️ Buy Me a Coffee 请我喝咖啡
+## 💛 Support / 支持
+
+If `Cutout` helps you build better UIs, please consider supporting it.  
+It only takes a few seconds and helps other Flutter developers discover the library.
+
+如果 `Cutout` 帮助了你，请考虑支持它，只需几秒即可帮助更多 Flutter 开发者发现此库。
+
+- ⭐ [Star on GitHub](https://github.com/runoob-coder/flutter_cutout_widget) / [GitHub 上点星](https://github.com/runoob-coder/flutter_cutout_widget)
+- 👍 [Like on pub.dev](https://pub.dev/packages/cutout) / [pub.dev 上点赞](https://pub.dev/packages/cutout)
+
+## ☕️ Buy Me a Coffee / 请我喝咖啡
 
 https://ko-fi.com/noob_coder
