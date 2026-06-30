@@ -1,5 +1,5 @@
 name: cutout
-description: "A mask-driven cutout widget — punch through content to reveal what's beneath."
+description: "A mask-driven cutout widget — punch through content to reveal what's beneath. 蒙版镂空组件，将指定形状从内容中挖除，透出底层背景。"
 version: 1.0.0
 homepage: https://github.com/runoob-coder/flutter_cutout_widget
 repository: https://github.com/runoob-coder/flutter_cutout_widget
@@ -10,10 +10,17 @@ topics:
   - user-interface
   - components
   - hollow
+include:
+  - pubspec.yaml
+  - CHANGELOG.md
+  - LICENSE
+  - README.md
+  - lib/
+  - example/lib/
 
 environment:
-  sdk: ^3.12.2
-  flutter: ">=1.17.0"
+  sdk: ^3.10.0
+  flutter: ">=3.38.0"
 
 dependencies:
   flutter:

@@ -4,6 +4,9 @@ A mask-driven cutout widget — punch through content to reveal what's beneath.
 
 蒙版镂空组件，将指定形状从内容中挖除，透出底层背景。
 
+[![Pub Version](https://img.shields.io/pub/v/tdesign_icons.svg)](https://pub.dev/packages/cutout)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 ## ✨ Features / 特性
 
 - **Any widget as mask** — Use icons, text, images, or any widget as the cutout shape
