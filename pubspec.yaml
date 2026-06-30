@@ -10,6 +10,10 @@ topics:
   - user-interface
   - components
   - hollow
+screenshots:
+  - description: "A mask-driven cutout widget — punch through content to reveal what's beneath. 蒙版镂空组件，将指定形状从内容中挖除，透出底层背景。"
+    path: screenshots/screenshot.png
+
 include:
   - pubspec.yaml
   - CHANGELOG.md

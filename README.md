@@ -10,6 +10,10 @@ A mask-driven cutout widget — punch through content to reveal what's beneath.
 [![API Reference](https://img.shields.io/badge/API-Reference-0175C2.svg)](https://pub.dev/documentation/cutout/latest/)
 [![GitHub stars](https://img.shields.io/github/stars/runoob-coder/flutter_cutout_widget.svg?style=social)](https://github.com/runoob-coder/flutter_cutout_widget)
 
+<div align="center">
+ <img width="400" alt="Cutout" src="https://raw.githubusercontent.com/runoob-coder/flutter_cutout_widget/screenshots/screenshot.png">
+</div>
+
 ## ✨ Features / 特性
 
 - **Any widget as mask** — Use icons, text, images, or any widget as the cutout shape
@@ -24,20 +28,7 @@ A mask-driven cutout widget — punch through content to reveal what's beneath.
 
 ## 🚀 Getting started / 快速开始
 
-Add `cutout` to your `pubspec.yaml`:
-
-在 `pubspec.yaml` 中添加依赖：
-
-```yaml
-dependencies:
-  cutout: ^1.0.0
-```
-
-Then import:
-
-```dart
-import 'package:cutout/cutout.dart';
-```
+Install via pub.dev → [pub.dev/packages/cutout/install](https://pub.dev/packages/cutout/install)
 
 ## [📖 Usage / 使用示例](https://github.com/runoob-coder/flutter_cutout_widget/example/lib/main.dart)
 
