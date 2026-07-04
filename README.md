@@ -199,5 +199,5 @@ It only takes a few seconds and helps other Flutter developers discover the libr
 ## ☕️ Buy Me a Coffee / 请我喝咖啡
 
 <a href="https://ko-fi.com/noob_coder" target="_blank">
-  <img height="36" src="https://storage.ko-fi.com/cdn/kofi1.png?v=3" alt="Buy Me a Coffee at ko-fi.com" />
+  <img src="https://storage.ko-fi.com/cdn/kofi6.png" alt="Buy Me a Coffee at ko-fi.com" />
 </a>
