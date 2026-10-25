@@ -1,43 +1,49 @@
 # 🪟 Cutout
 
-A mask-driven cutout widget — punch through content to reveal what's beneath.  
+A mask-driven cutout widget for Flutter — punch a shape through content to reveal what is painted beneath it.
 
-蒙版镂空组件，将指定形状从内容中挖除，透出底层背景。
+**English** · [简体中文](https://github.com/runoob-coder/flutter_cutout_widget/blob/master/README_CN.md)
 
 [![Pub Version](https://img.shields.io/pub/v/cutout.svg)](https://pub.dev/packages/cutout)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Flutter Demo](https://img.shields.io/badge/demo-Flutter-brightgreen.svg)](https://runoob-coder.github.io/flutter_cutout_widget/)
 [![API Reference](https://img.shields.io/badge/API-Reference-0175C2.svg)](https://pub.dev/documentation/cutout/latest/)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/runoob-coder/flutter_cutout_widget)
+[![CI](https://img.shields.io/github/actions/workflow/status/runoob-coder/flutter_cutout_widget/deploy_web.yml?label=CI)](https://github.com/runoob-coder/flutter_cutout_widget/actions/workflows/deploy_web.yml)
 [![GitHub stars](https://img.shields.io/github/stars/runoob-coder/flutter_cutout_widget.svg?style=social)](https://github.com/runoob-coder/flutter_cutout_widget)
 
 <div align="center">
- <img width="400" alt="Cutout" src="https://raw.githubusercontent.com/runoob-coder/flutter_cutout_widget/master/screenshots/screenshot.png">
+  <a href="https://runoob-coder.github.io/flutter_cutout_widget/" target="_blank"><img width="400" alt="Cutout" src="https://raw.githubusercontent.com/runoob-coder/flutter_cutout_widget/master/screenshots/screenshot.png"></a>
 </div>
 
-## ✨ Features / 特性
+## ✨ Features
 
-- **Any widget as mask** — Use icons, text, images, or any widget as the cutout shape
-- **Images as mask** — Use transparent Image (eg. `PNG`) as cutout shapes
-- **Flexible alignment** — Full control over mask positioning via `alignment`
+- **Any widget as a mask** — icons, text, shapes, transparent images, or any composition of them.
+- **Alpha aware** — the alpha channel of the mask decides how much content is erased, so anti-aliased edges produce soft cutouts.
+- **Plain `Stack` layout** — `alignment`, `fit`, `textDirection` and `Positioned` children work exactly as they do in a `Stack`.
+- **Only your own content is cut** — the content is isolated in an offscreen buffer, so whatever is painted *behind* the cutout is revealed untouched.
 
----
+## 📦 Installation
 
-- **任意组件做蒙版** — 支持图标、文字、图片或任意组合作为镂空形状
-- **图片蒙版** — 使用带透明度图片（如 `PNG` ）作为镂空底图
-- **灵活对齐** — 通过 `alignment` 参数完全控制蒙版位置
+```yaml
+dependencies:
+  cutout: ^1.0.3
+```
 
-## 🚀 Getting started / 快速开始
+```sh
+flutter pub add cutout
+```
 
-Install via pub.dev → [pub.dev/packages/cutout/install](https://pub.dev/packages/cutout/install)
+Requires Dart 3.10+ / Flutter 3.38+.
 
-## [📖 Usage / 使用示例](https://github.com/runoob-coder/flutter_cutout_widget/example/lib/main.dart)
+## 🚀 Usage
 
-https://runoob-coder.github.io/flutter_cutout_widget/
+`Cutout` takes two widgets: `maskChild` (the shape that is punched out) and `child` (the content that is punched through).
 
-### Basic cutout with an icon / 使用图标镂空
+### ⭐ Icon mask
 
 ```dart
-Cutout(
+final iconMask = Cutout(
   alignment: Alignment.center,
   maskChild: const Icon(Icons.star, size: 50),
   child: Container(
@@ -45,13 +51,13 @@ Cutout(
     height: 100,
     color: Colors.blue,
   ),
-)
+);
 ```
 
-### 🪟 Cutout with text / 使用文字镂空
+### 🔤 Text mask
 
 ```dart
-Cutout(
+final textMask = Cutout(
   alignment: Alignment.center,
   maskChild: const Text(
     'Cutout',
@@ -62,16 +68,17 @@ Cutout(
     height: 50,
     color: Colors.orange,
   ),
-)
+);
 ```
 
-### Composable mask (icon + text) / 组合蒙版（图标+文字）
+### 🧩 Composed mask (icon + text)
 
 ```dart
-Cutout(
+final composedMask = Cutout(
   alignment: Alignment.center,
   maskChild: const Row(
-    mainAxisSize: MainAxisSize.min, // must be min / 约束必须为 min
+    // Must shrink-wrap, otherwise the row spans the whole stack.
+    mainAxisSize: MainAxisSize.min,
     children: [
       Text('Cutout', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
       Icon(Icons.auto_awesome, size: 30),
@@ -83,19 +90,19 @@ Cutout(
     height: 50,
     color: Colors.green,
   ),
-)
+);
 ```
 
-### 🪟 Cutout over images / 图片镂空
+### 🖼 Cutout over a background image
 
 ```dart
-SizedBox(
+final cutoutOverBackground = SizedBox(
   height: 120,
   child: Stack(
     alignment: Alignment.center,
     children: [
-      // Background image showing through the holes / 底层背景透过镂空区域显示
-      Image.asset('assets/background.jpg'),
+      // The background shows through the holes.
+      Image.asset('assets/images/18-fractal-glass-hero-bg.jpg'),
       Cutout(
         alignment: Alignment.center,
         maskChild: const Row(
@@ -107,97 +114,140 @@ SizedBox(
           ],
         ),
         child: Image.asset(
-          'assets/gradient.jpg',
+          'assets/images/01-colorful-smooth-gradient.jpg',
           fit: BoxFit.fill,
           width: double.infinity,
         ),
       ),
     ],
   ),
-)
+);
 ```
 
-### Transparent PNG as mask / 透明度图片做蒙版
+### 🎭 Transparent PNG as mask
 
 ```dart
-Cutout(
+final pngMask = Cutout(
   alignment: Alignment.center,
-  maskChild: Image.asset('assets/magic.png', height: 220), // use an image with transparency / 请使用透明度图
-  child: Image.asset('assets/16-fractal-glass-hero-gradients.jpg'),
-)
+  // Use an image with an alpha channel (PNG, WebP, …).
+  maskChild: Image.asset('assets/images/magic.png', height: 220),
+  child: Image.asset('assets/images/16-fractal-glass-hero-gradients.jpg'),
+);
 ```
 
-## ⚙️ How it works / 原理
+### 🎬 Animating the hole
 
+Animating the **layout** of the mask is safe — it does not push a composited layer:
+
+```dart
+double holeSize = 80; // call setState() to grow or shrink the hole
+
+final animatedHole = Cutout(
+  alignment: Alignment.center,
+  maskChild: AnimatedContainer(
+    duration: const Duration(milliseconds: 300),
+    curve: Curves.easeInOut,
+    width: holeSize,
+    height: holeSize,
+    decoration: const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
+  ),
+  child: Image.asset('assets/images/22-iridescent-holographic.jpg'),
+);
 ```
-1. Content children → rasterized into offscreen buffer
-2. Mask child drawn with BlendMode.dstOut → opaque mask pixels punch holes
-3. Buffer composited back onto canvas
-```
 
-```
-1. 内容子组件 → 光栅化到离屏缓冲区
-2. 蒙版子组件以 BlendMode.dstOut 绘制 → 不透明像素在内容上镂空
-3. 缓冲区合成回Canvas
-```
+Rotating or translating the mask (`Transform`) works as well, as long as it does not have to composite.
 
-## ⚠️ Important / 重要提示
+## 📋 API
 
-> [!IMPORTANT]
-> Content children that push their own composited layers — such as `AnimatedSwitcher`, `Opacity`, `FadeTransition`, `ClipRect`, `Transform`, `BackdropFilter`, etc. — will have those layers composite **outside** the internal `saveLayer` buffer, defeating the mask effect.
->
-> **Avoid nesting layer-pushing widgets inside `Cutout.child` !**
->
-> This is a fundamental limitation of Flutter's compositing pipeline and cannot be fixed at the framework level — it would require changes to the Flutter engine itself. If you have a solution, PRs are welcome!
-
-`RenderCutout.paintStack` isolates content inside a `canvas.saveLayer` buffer,
-but when `context.paintChild` draws a content child (e.g. `FadeTransition` inside `AnimatedSwitcher`),
-the child may push its own composited layer (e.g. `OpacityLayer`) into the layer tree via `pushOpacity`.
-These layers become siblings of the current `ContainerLayer` and escape the `saveLayer` buffer,
-breaking the `dstOut` cutout.
-
----
-
-> [!IMPORTANT]
-> 如果 `Cutout.child` 中包含会推送自身合成层的组件（如 `AnimatedSwitcher`、`Opacity`、`FadeTransition`、`ClipRect`、`Transform`、`BackdropFilter` 等），这些层会在内部 `saveLayer` 缓冲区**外部**合成，导致镂空失效。
->
-> **避免在 `Cutout.child` 中嵌套会推送层的组件！**
->
-> 这是 Flutter 合成管线的底层限制，无法在框架层修复 — 需要调整 Flutter 引擎本身。如果你有解决方案，欢迎贡献 PR！
-
-`RenderCutout.paintStack` 使用 `canvas.saveLayer` 做外层隔离，
-但 `context.paintChild` 绘制内容子节点时，子节点（如 AnimatedSwitcher 内部的 `FadeTransition`）
-可能通过 `pushOpacity` 等调用向 `layer tree` 推入独立的合成层（如 `OpacityLayer`）。
-这些合成层是当前 `ContainerLayer` 的兄弟节点，会逃逸出 `saveLayer` 缓冲区，导致`dstOut`镂空失效。
-
-## [📋 API](https://pub.dev/documentation/cutout)
-
-| Parameter | Type | Default | Description / 说明 |
+| Parameter | Type | Default | Description |
 |---|---|---|---|
-| `maskChild` | `Widget` | **required** | The shape to punch through / 用于镂空的形状 |
-| `child` | `Widget` | **required** | The content to be cut through / 被镂空的内容 |
-| `alignment` | `AlignmentGeometry` | `Alignment.topStart` | Mask alignment / 蒙版对齐方式 |
-| `textDirection` | `TextDirection?` | `null` | Text direction for alignment / 文本方向 |
-| `fit` | `StackFit` | `StackFit.loose` | How to size the stack / Stack尺寸约束 |
-| `clip` | `Clip` | `Clip.hardEdge` | Clip behavior / 裁剪行为 |
+| `maskChild` | `Widget` | **required** | The shape that is punched out of `child`. Must not push a composited layer. |
+| `child` | `Widget` | **required** | The content that gets punched through. |
+| `alignment` | `AlignmentGeometry` | `Alignment.topStart` | How the mask and the content are aligned inside the stack. |
+| `textDirection` | `TextDirection?` | `null` | Resolves `alignment`; defaults to the ambient `Directionality`. |
+| `fit` | `StackFit` | `StackFit.loose` | How to size the non-positioned children. |
+| `clip` | `Clip` | `Clip.hardEdge` | Whether overflowing content is clipped to the box. With `Clip.none` the internal buffers are grown to contain every child. |
 
-## 📎 Additional information / 更多信息
+Full API reference: [pub.dev/documentation/cutout](https://pub.dev/documentation/cutout/latest/).
 
-- **Homepage:** [GitHub](https://github.com/runoob-coder/flutter_cutout_widget)
-- **Issue Tracker:** [GitHub Issues](https://github.com/runoob-coder/flutter_cutout_widget/issues)
+## ⚙️ How it works
 
-## 💛 Support / 支持
+```
+1. The content children are rasterized into an offscreen buffer (Canvas.saveLayer).
+2. The mask is drawn into a second buffer, composited onto the first one with
+   BlendMode.dstOut — opaque mask pixels erase the content underneath them.
+3. The first buffer is composited back onto the canvas.
+```
 
-If `Cutout` helps you build better UIs, please consider supporting it.  
-It only takes a few seconds and helps other Flutter developers discover the library.
+Step 2 is what makes the mask a *stencil*: it is never painted, it only removes pixels. Step 1 is what keeps the cutout local — without it, `dstOut` would punch through everything painted behind the widget as well.
 
-如果 `Cutout` 帮助了你，请考虑支持它，只需几秒即可帮助更多 Flutter 开发者发现此库。
+## ⚠️ Limitations and gotchas
 
-- ⭐ [Star on GitHub](https://github.com/runoob-coder/flutter_cutout_widget) / [GitHub 上点星](https://github.com/runoob-coder/flutter_cutout_widget)
-- 👍 [Like on pub.dev](https://pub.dev/packages/cutout) / [pub.dev 上点赞](https://pub.dev/packages/cutout)
+### ⛔ The mask must not push a composited layer
 
-## ☕️ Buy Me a Coffee / 请我喝咖啡
+`Canvas.saveLayer` lives inside the current *recording*. A widget that pushes its own layer — `RepaintBoundary`, `Opacity` with an alpha below `255`, `FadeTransition` / `AnimatedOpacity`, `AnimatedSwitcher`, `BackdropFilter`, `ShaderMask`, … — ends that recording early and appends its layer next to the `dstOut` buffer.
 
-<a href="https://ko-fi.com/noob_coder" target="_blank">
-  <img src="https://storage.ko-fi.com/cdn/kofi6.png" alt="Buy Me a Coffee at ko-fi.com" />
-</a>
+For the **mask** this is fatal: the layer is composited *after* the buffer, so the mask becomes visible on top of the content instead of cutting through it. That cannot be repaired at this level of the pipeline — it would need engine support — so debug builds assert and point at the offending widget. The canvas bookkeeping stays balanced in that case, the cutout simply stops working.
+
+```dart
+// ❌ The mask escapes the dstOut buffer: it is painted on top of the content.
+final maskedOpacity = Cutout(
+  maskChild: Opacity(opacity: 0.5, child: const Icon(Icons.star)),
+  child: Container(color: Colors.black54),
+);
+
+// ✅ Fade the whole cutout instead of the mask.
+final fadedCutout = Opacity(
+  opacity: 0.5,
+  child: Cutout(
+    maskChild: const Icon(Icons.star),
+    child: Container(color: Colors.black54),
+  ),
+);
+```
+
+If a mask really has to be produced by a compositing widget, rasterize it first (`RepaintBoundary` + `toImage`, or ship it as an image asset) and hand the resulting image to `Cutout`.
+
+### ✅ The content *may* push composited layers
+
+Layers pushed by `child` are appended *before* the `dstOut` buffer, so they are erased correctly. Wrapping the content in a `RepaintBoundary` or an `Opacity` is fine:
+
+```dart
+// ✅ Works: composited content is still cut correctly.
+final compositedContent = Cutout(
+  maskChild: const Text('Hi', style: TextStyle(fontSize: 40)),
+  child: RepaintBoundary(child: ExpensiveChart()),
+);
+```
+
+### 📌 Other notes
+
+- **The mask is a stencil, not a child you can see.** It only removes pixels, and it must not contain interactive widgets: a mask stays in the hit-test tree, so an invisible `GestureDetector`/`IconButton` inside `maskChild` would still receive taps.
+- **Shrink-wrap composite masks.** A `Row`/`Column` mask spans the whole stack by default — pass `mainAxisSize: MainAxisSize.min` (or wrap it in `IntrinsicWidth`) so only the text and icons are punched out.
+- **Overflow.** With `Clip.hardEdge` overflow is clipped to the box. With `Clip.none` the buffers grow to cover every child's layout box (including `Positioned` overflow), but content that paints outside its own layout box (`Transform`, `OverflowBox`, …) can still be clipped by the buffers.
+- **Cost.** A cutout costs two `saveLayer` layers per paint, which forces a render-target switch on the GPU. Keep the cutout as small as the design allows, avoid a full-screen `Cutout` over an expensive background, and wrap static content in a `RepaintBoundary` so it can be cached instead of being re-rasterized into the buffer every frame.
+- **Something must be behind it.** `Cutout` paints no background of its own; put it in a `Stack` (or over any other widget) so there is something to reveal.
+
+## 🧪 Tests
+
+The package ships a rendering test suite that rasterizes the widget and inspects the resulting pixels:
+
+```sh
+flutter test
+```
+
+It covers hole punching, alpha blending, `Stack` layout (`alignment`, `Positioned`, `Clip.none`), composited content, sibling isolation inside the same layer, and the mask assertion.
+
+## 💛 Support
+
+If `Cutout` helps you build better UIs, please consider supporting it — it only takes a few seconds and helps other Flutter developers discover the library.
+
+- ⭐ [Star on GitHub](https://github.com/runoob-coder/flutter_cutout_widget)
+- 👍 [Like on pub.dev](https://pub.dev/packages/cutout)
+
+
+## [☕️ Buy Me a Coffee](https://www.noob-coder.com/buy-me-a-coffee)
+
+|                                                                                   Buy Me a Coffee                                                                                   |                                                                                    Donate with PayPal                                                                                     |
+|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| <a href="https://ko-fi.com/noob_coder" target="_blank"><img src="https://github.com/runoob-coder/runoob-coder/raw/main/public/kofi6.webp" alt="Buy Me a Coffee at ko-fi.com" /></a> | <a href="https://paypal.me/runoobcoder" target="_blank"><img src="https://github.com/runoob-coder/runoob-coder/raw/main/public/paypal-donate-button.avif" alt="Donate with PayPal" /></a> |

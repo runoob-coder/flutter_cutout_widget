@@ -39,7 +39,7 @@ class ExamplePage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          /// Cutout using Icon / 使用Icon镂空
+          // Icon mask
           Cutout(
             alignment: .center,
             maskChild: const Icon(
@@ -56,7 +56,7 @@ class ExamplePage extends StatelessWidget {
 
           const SizedBox(height: 8),
 
-          /// Cutout using Text / 使用Text镂空
+          // Text mask
           Cutout(
             alignment: .center,
             maskChild: const Text(
@@ -72,12 +72,12 @@ class ExamplePage extends StatelessWidget {
 
           const SizedBox(height: 8),
 
-          /// Cutout using Icon and Text / 使用Icon和Text镂空
+          // Icon + text mask
           Cutout(
             alignment: .center,
             maskChild: const Row(
               spacing: 8,
-              // mainAxisSize must be min / 约束必须为 min
+              // must shrink-wrap, otherwise the row covers the whole stack
               mainAxisSize: .min,
               children: [
                 Text(
@@ -105,7 +105,7 @@ class ExamplePage extends StatelessWidget {
 
           const SizedBox(height: 8),
 
-          /// Cutout with image background / 镂空图片
+          // Cutout over a background image
           SizedBox(
             height: 120,
             child: Stack(
@@ -117,7 +117,6 @@ class ExamplePage extends StatelessWidget {
                   maskChild: const DefaultTextStyle(
                     style: TextStyle(fontSize: 56, fontWeight: .w900),
                     child: Row(
-                      // mainAxisSize must be min / 约束必须为 min
                       mainAxisSize: .min,
                       children: [
                         Text('Hello'),
@@ -145,7 +144,6 @@ class ExamplePage extends StatelessWidget {
               maskChild: const DefaultTextStyle(
                 style: TextStyle(fontSize: 70, fontWeight: .w800),
                 child: Row(
-                  // mainAxisSize must be min / 约束必须为 min
                   mainAxisSize: .min,
                   children: [Text('拜问'), FlutterLogo(size: 80), Text('八荒')],
                 ),
@@ -160,10 +158,9 @@ class ExamplePage extends StatelessWidget {
 
           const SizedBox(height: 8),
 
-          /// Cutout using image as mask / 使用图片进行镂空
+          // Image mask: the mask must carry an alpha channel
           Cutout(
             alignment: .center,
-            // Please use an image with transparency / 请使用透明度图
             maskChild: Image.asset('assets/images/magic.png', height: 220),
             child: Image.asset(
               'assets/images/16-fractal-glass-hero-gradients.jpg',
@@ -174,32 +171,22 @@ class ExamplePage extends StatelessWidget {
 
           Cutout(
             alignment: .center,
-            // Please use an image with transparency / 请使用透明度图
             maskChild: Image.asset('assets/images/pikachu.png', height: 300),
             child: Image.asset('assets/images/22-iridescent-holographic.jpg'),
           ),
 
           const SizedBox(height: 8),
 
-          /// Broken cutout demo: AnimatedSwitcher pushes its own composited
-          /// layers (FadeTransition → OpacityLayer), which composite *outside*
-          /// the saveLayer buffer and defeat the mask.
-          /// Fix: either avoid nesting layer-pushing widgets inside [Cutout.child],
-          /// or wrap them with a [RepaintBoundary] before applying the cutout.
-          /// ---
-          /// 镂空失效示例：AnimatedSwitcher 会推送自己的合成层
-          /// (FadeTransition → OpacityLayer)，这些层在 saveLayer 缓冲区*外部*
-          /// 合成，导致 mask 失效。
-          /// 修复方式：避免在 [Cutout.child] 中嵌套会推送层的组件，
-          /// 或在应用镂空前用 [RepaintBoundary] 包裹这些组件。
+          // Composited *content* is fine: its layers sit below the dstOut
+          // buffer. A composited *mask* would escape that buffer instead.
           Cutout(
             alignment: .center,
             maskChild: const Text(
-              'Broken: AnimatedSwitcher',
+              'Composited content',
               style: TextStyle(fontSize: 24, fontWeight: .bold),
             ),
             child: AnimatedSwitcher(
-              duration: .zero,
+              duration: const Duration(milliseconds: 600),
               child: Container(
                 height: 60,
                 color: CupertinoColors.destructiveRed,
