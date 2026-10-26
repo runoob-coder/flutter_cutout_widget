@@ -3,9 +3,29 @@ name: Build & Deploy Flutter Web
 on:
   push:
     branches: [master, main]
+    paths:
+      - "example/**"
+      - "lib/**"
+      - "test/**"
+      - "analysis_options.yaml"
+      - "pubspec.yaml"
+      - "pubspec.lock"
+      - ".github/workflows/deploy_web.yml"
   pull_request:
     branches: [master, main]
+    paths:
+      - "example/**"
+      - "lib/**"
+      - "test/**"
+      - "analysis_options.yaml"
+      - "pubspec.yaml"
+      - "pubspec.lock"
+      - ".github/workflows/deploy_web.yml"
   workflow_dispatch:
+
+concurrency:
+  group: deploy-web-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
